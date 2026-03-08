@@ -7,7 +7,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Made with Love](https://img.shields.io/badge/made%20with-❤️-red.svg)](https://github.com/yourusername)
+[![Made with Love](https://img.shields.io/badge/made%20with-❤️-red.svg)](https://github.com/sharuiti)
 
 </div>
 
@@ -45,7 +45,7 @@
 - **Zero password storage** - Your privacy is guaranteed
 - **k-Anonymity implementation** - Industry-standard security practice
 - **Comprehensive error handling** - Graceful failure for network issues
-- **User-friendly output** - Clear, formatted results 
+- **User-friendly output** - Clear, formatted results
 
 ---
 
@@ -70,8 +70,8 @@
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/sharuiti/password_strength_checker.git
-   cd password_strength_checker
+   git clone https://github.com/sharuiti/password-strength-checker.git
+   cd password-strength-checker
 ```
 
 2. **Install required packages**
@@ -81,7 +81,6 @@
 
 3. **Download the common passwords list**
 ```bash
-   # Download the 10k most common passwords
    curl -O https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10k-most-common.txt
 ```
    Or manually download and place `10k-most-common.txt` in the `common_list/` folder.
@@ -101,7 +100,7 @@ python password_checker.py
 ```
 
 ### Example Session
-```bash
+```
 Enter your password (or 'quit' to exit): MyP@ssw0rd123
 
  PASSWORD ANALYSIS:
@@ -109,14 +108,13 @@ Enter your password (or 'quit' to exit): MyP@ssw0rd123
  -Types used: 4/4 character types
  -Password Strength: VERY STRONG
 
- SUGGESTIONS TO IMPROVE YOUR PASSWORD:
  Your password is excellent!
 
  CHECK PASSWORD IN COMMON LIST:
  -password is not in common passwords list
 
- CHECKING BREACH DATABASE:
- Safe! Not found in any breaches
+ CHECK PASSWORD AGAINST PWNED DATABASE:
+ -Not found in any breaches!
 ```
 
 ---
@@ -146,32 +144,32 @@ python password_checker.py
 ### Special Alerts
 - **"TOP 10 most common passwords"** - Change this password NOW
 - **"Found in X breaches"** - Never use this password anywhere
-- **"API error"** - Check internet connection
+- **"API error"** - Check your internet connection
 
 ---
 
 ## 🔧 How It Works
 
 ### 1. Password Strength Analysis
-```python
-# Checks for:
-✓ Length (minimum 8 characters)
-✓ Uppercase letters (A-Z)
-✓ Lowercase letters (a-z)
-✓ Numbers (0-9)
-✓ Special characters (!@#$%^&*...)
-```
+Checks for:
+- Length (minimum 8 characters)
+- Uppercase letters (A-Z)
+- Lowercase letters (a-z)
+- Numbers (0-9)
+- Special characters (`!@#$%^&*()_+-=` etc.)
 
 ### 2. Common Password Detection
-- Compares against database of 10,000 most common passwords
+- Compares against a database of 10,000 most common passwords
 - Returns rank if found (e.g., "#3 most common password!")
+- Issues a special warning for passwords in the TOP 10
 
 ### 3. Breach Database Check (k-Anonymity)
 ```
-Step 1: Hash password → SHA-1
-Step 2: Take first 5 chars → Send to API
-Step 3: API returns all matching hashes
-Step 4: Local comparison → Breach count
+Step 1: Hash password with SHA-1
+Step 2: Send only the first 5 characters to the API
+Step 3: API returns all hashes that match the prefix
+Step 4: Local comparison to check if your full hash is in the list
+Step 5: Returns how many times the password was found in breaches
 ```
 
 ---
@@ -180,23 +178,19 @@ Step 4: Local comparison → Breach count
 ```
 password-strength-checker/
 │
-├── 📄 password_checker.py      # Main application file
-├── 📄 README.md                # Documentation
-├── 📄 LICENSE                  # MIT License
+├── 📄 password_checker.py       # Main application file
+├── 📄 README.md                 # Documentation
 │
-├── 📁 common_list/             # Password lists
-│   └── 📄 10k-most-common.txt # Top 10k passwords
-│
-└── 📁 docs/                    # Additional documentation
-    └── 📄 API.md               # HIBP API details
+└── 📁 common_list/              # Password lists
+    └── 📄 10k-most-common.txt   # Top 10k most common passwords
 ```
 
 ### Key Files Explained
 
 | File | Purpose |
 |------|---------|
-| `password_checker.py` | Main script with all functionality |
-| `10k-most-common.txt` | Database of common passwords for comparison |
+| `password_checker.py` | Main script — strength check, common list check, HIBP API check |
+| `10k-most-common.txt` | Local database of common passwords for comparison |
 | `README.md` | You're reading it! |
 
 ---
@@ -204,24 +198,19 @@ password-strength-checker/
 ## ⚙️ Configuration
 
 ### File Paths
-If your common passwords file is in a different location, modify line 54:
+The common passwords file is expected at `common_list/10k-most-common.txt`. If yours is in a different location, update this line in `password_checker.py`:
 ```python
 # Change this:
 with open("common_list/10k-most-common.txt", "r") as file:
 
-# To your path:
-with open("your/path/here.txt", "r") as file:
+# To your custom path:
+with open("your/custom/path.txt", "r") as file:
 ```
 
 ### API Configuration
-The Have I Been Pwned API is pre-configured. **No API key needed!**
-
-### Environment Variables (Optional)
-Create a `.env` file for custom settings:
-```bash
-COMMON_PASSWORDS_PATH=./common_list/10k-most-common.txt
-API_TIMEOUT=5
-USER_AGENT=PasswordChecker/1.0
+The Have I Been Pwned API is pre-configured with no API key required. The timeout is set to 5 seconds and the User-Agent is:
+```
+PasswordStrengthChecker/1.0 (Python Script)
 ```
 
 ---
@@ -231,7 +220,7 @@ USER_AGENT=PasswordChecker/1.0
 Contributions are welcome! Here's how you can help:
 
 ### 🐛 Report Bugs
-- Open an issue with detailed description
+- Open an issue with a detailed description
 - Include your Python version and OS
 - Paste the error message if applicable
 
@@ -242,8 +231,8 @@ Contributions are welcome! Here's how you can help:
 ### 🔧 Submit Pull Requests
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
 ### Development Guidelines
@@ -257,20 +246,12 @@ Contributions are welcome! Here's how you can help:
 ## 📜 License
 
 Distributed under the MIT License. See `LICENSE` file for more information.
-```
-MIT License
-
-Copyright (c) 2024 [Safae Charuiti]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files...
-```
 
 ---
 
 ## 📞 Contact
 
-Safae Charuiti - [@my-linkedin](www.linkedin.com/in/safae-charuiti-48386627b) - safaecharuiti@email.com
+Safae Charuiti - [LinkedIn](https://linkedin.com/in/safaecharuiti) - safaecharuiti@email.com
 
 Project Link: [https://github.com/sharuiti/password-strength-checker](https://github.com/sharuiti/password-strength-checker)
 
@@ -279,7 +260,7 @@ Project Link: [https://github.com/sharuiti/password-strength-checker](https://gi
 ## 🙏 Acknowledgments
 
 - [Have I Been Pwned](https://haveibeenpwned.com/) for their incredible free API
-- [SecLists](https://github.com/danielmiessler/SecLists) for password lists
+- [SecLists](https://github.com/danielmiessler/SecLists) for the common passwords list
 - All contributors and users who provide feedback
 
 ---
