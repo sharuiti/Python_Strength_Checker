@@ -45,7 +45,7 @@
 - **Zero password storage** - Your privacy is guaranteed
 - **k-Anonymity implementation** - Industry-standard security practice
 - **Comprehensive error handling** - Graceful failure for network issues
-- **User-friendly output** - Clear, formatted results with emojis
+- **User-friendly output** - Clear, formatted results 
 
 ---
 
@@ -70,8 +70,8 @@
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/yourusername/password-strength-checker.git
-   cd password-strength-checker
+   git clone https://github.com/sharuiti/password_strength_checker.git
+   cd password_strength_checker
 ```
 
 2. **Install required packages**
