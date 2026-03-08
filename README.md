@@ -251,7 +251,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ## 📞 Contact
 
-Safae Charuiti - [LinkedIn](https://linkedin.com/in/safaecharuiti) - safaecharuiti@email.com
+Safae Charuiti - [LinkedIn](www.linkedin.com/in/safae-charuiti-48386627b) - safaecharuiti@email.com
 
 Project Link: [https://github.com/sharuiti/password-strength-checker](https://github.com/sharuiti/password-strength-checker)
 
